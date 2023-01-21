@@ -11,9 +11,13 @@ pipeline {
         }
         
         stage('Semgrep') {
+            agent {
+                docker {
+                    image "returntocorp/semgrep-agent"
+            }
             steps {
-                 sh 'docker run -v ${WORKSPACE}:/src --workdir /src returntocorp/semgrep-agent:v1 semgrep-agent --config p/ci --config p/security-audit --config p/secrets'
-                 sh 'echo ${?} > /dev/null'
+                 sh 'semgrep-agent --config p/ci --config p/security-audit --config p/secrets'
+                // sh 'echo ${?} > /dev/null'
             }
         }
 
