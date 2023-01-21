@@ -14,6 +14,7 @@ pipeline {
             agent {
                 docker {
                     image "returntocorp/semgrep-agent"
+                }
             }
             steps {
                  sh 'semgrep-agent --config p/ci --config p/security-audit --config p/secrets'
